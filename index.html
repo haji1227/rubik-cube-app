@@ -24,15 +24,16 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 8px;
+            padding: 4px;
+            margin: 0;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
             background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
             overflow: hidden;
         }
         
@@ -40,28 +41,28 @@
             background: linear-gradient(45deg, #4CAF50, #45a049);
             color: white;
             text-align: center;
-            padding: 16px;
-            font-size: 20px;
+            padding: 10px;
+            font-size: 18px;
             font-weight: 600;
         }
         
         .main-content {
-            padding: 16px;
+            padding: 8px;
         }
         
         .cube-section {
             background: white;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 16px;
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            margin-bottom: 8px;
             text-align: center;
         }
         
         .cube-section h3 {
             color: #333;
-            margin-bottom: 12px;
-            font-size: 16px;
+            margin-bottom: 6px;
+            font-size: 14px;
             font-weight: 600;
         }
         
@@ -69,41 +70,43 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
+            gap: 8px;
         }
         
         .cube {
             border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
         
         .controls-section {
             background: white;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 16px;
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            margin-bottom: 8px;
+            width: 100%;
+            max-width: 420px;
         }
         
         .algorithm-display {
             background: #f8f9fa;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 8px;
             font-family: 'Courier New', monospace;
-            font-size: 14px;
-            min-height: 40px;
+            font-size: 13px;
+            min-height: 32px;
             word-wrap: break-word;
             text-align: center;
         }
         
         .button-grid {
             display: grid;
-            gap: 6px;
-            margin-bottom: 12px;
+            gap: 4px;
+            margin-bottom: 8px;
         }
         
         .face-buttons { grid-template-columns: repeat(6, 1fr); }
@@ -112,15 +115,35 @@
         .middle-buttons { grid-template-columns: repeat(3, 1fr); }
         .wide-buttons { grid-template-columns: repeat(6, 1fr); }
         
+        /* New combined grid for face buttons and actions */
+        .face-action-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .face-buttons-section {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+        
         button {
-            padding: 12px 8px;
+            padding: 8px 6px;
             border: none;
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 4px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
-            min-height: 44px; /* Touch-friendly */
+            min-height: 36px; /* Touch-friendly */
         }
         
         .move-btn {
@@ -181,30 +204,30 @@
         
         .settings-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
         }
         
         .setting-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
         }
         
         .setting-item label {
             font-weight: 600;
             color: #555;
-            min-width: 60px;
-            font-size: 13px;
+            min-width: 40px;
+            font-size: 11px;
         }
         
         input, select {
             flex: 1;
-            padding: 8px;
+            padding: 4px;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
+            border-radius: 3px;
+            font-size: 12px;
         }
         
         .slider {
@@ -245,38 +268,52 @@
         
         .section-title {
             color: #333;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
-            margin-bottom: 6px;
-            text-align: center;
+            margin-bottom: 4px;
+            text-align: left;
         }
         
         @media (max-width: 768px) {
             .container {
-                margin: 4px;
-                border-radius: 12px;
+                margin: 2px;
+                border-radius: 8px;
             }
             
             .header {
-                font-size: 18px;
-                padding: 12px;
+                font-size: 16px;
+                padding: 8px;
             }
             
             .main-content {
-                padding: 12px;
+                padding: 6px;
             }
             
-            .face-buttons { grid-template-columns: repeat(3, 1fr); }
+            .face-action-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            
+            .face-buttons-section { 
+                grid-template-columns: repeat(3, 1fr); 
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
             .wide-buttons { grid-template-columns: repeat(3, 1fr); }
             .modifier-buttons { grid-template-columns: repeat(2, 1fr); }
             
             button {
-                padding: 10px 6px;
-                font-size: 13px;
+                padding: 8px 4px;
+                font-size: 11px;
+                min-height: 32px;
             }
             
             .settings-grid {
                 grid-template-columns: 1fr;
+                gap: 6px;
             }
         }
         
@@ -307,20 +344,26 @@
                         <script>AnimCube3("move=R U R' U R U2 R'&buttonbar=1&movetext=1&hint=6&scale=1&speed=12")</script>
                     </div>
                     
-                    <!-- Controls integrated here -->
-                    <div class="controls-section" style="width: 100%; max-width: 400px;">
+                    <div class="controls-section">
                         <!-- Algorithm Display -->
                         <div class="algorithm-display" id="algorithmDisplay">R U R' U R U2 R'</div>
 
-                        <!-- Face Rotations -->
-                        <div class="section-title">Basic Moves</div>
-                        <div class="button-grid face-buttons">
-                            <button class="move-btn" onclick="addMove('F')">F</button>
-                            <button class="move-btn" onclick="addMove('B')">B</button>
-                            <button class="move-btn" onclick="addMove('R')">R</button>
-                            <button class="move-btn" onclick="addMove('L')">L</button>
-                            <button class="move-btn" onclick="addMove('U')">U</button>
-                            <button class="move-btn" onclick="addMove('D')">D</button>
+                        <!-- Face Moves + Quick Actions -->
+                        <div class="section-title">Basic Moves & Actions</div>
+                        <div class="face-action-grid">
+                            <div class="face-buttons-section">
+                                <button class="move-btn" onclick="addMove('F')">F</button>
+                                <button class="move-btn" onclick="addMove('B')">B</button>
+                                <button class="move-btn" onclick="addMove('R')">R</button>
+                                <button class="move-btn" onclick="addMove('L')">L</button>
+                                <button class="move-btn" onclick="addMove('U')">U</button>
+                                <button class="move-btn" onclick="addMove('D')">D</button>
+                            </div>
+                            <div class="quick-actions">
+                                <button class="action-btn" onclick="updateCube()">Execute</button>
+                                <button class="action-btn" onclick="clearAlgorithm()">Clear</button>
+                                <button class="action-btn" onclick="undoLastMove()">Undo</button>
+                            </div>
                         </div>
 
                         <!-- Modifiers -->
@@ -332,41 +375,14 @@
                             <button class="move-btn modifier-btn" onclick="addMove(' ')">Space</button>
                         </div>
 
-                        <!-- Cube Rotations -->
-                        <div class="section-title">Cube Rotations</div>
-                        <div class="button-grid rotation-buttons">
-                            <button class="move-btn rotation-btn" onclick="addMove('x')">x</button>
-                            <button class="move-btn rotation-btn" onclick="addMove('y')">y</button>
-                            <button class="move-btn rotation-btn" onclick="addMove('z')">z</button>
-                        </div>
-
-                        <!-- Middle Layer -->
-                        <div class="section-title">Middle Layers</div>
-                        <div class="button-grid middle-buttons">
-                            <button class="move-btn middle-btn" onclick="addMove('M')">M</button>
-                            <button class="move-btn middle-btn" onclick="addMove('E')">E</button>
-                            <button class="move-btn middle-btn" onclick="addMove('S')">S</button>
-                        </div>
-
-                        <!-- Wide Turns -->
-                        <div class="section-title">Wide Turns</div>
-                        <div class="button-grid wide-buttons">
-                            <button class="move-btn wide-btn" onclick="addMove('r')">r</button>
-                            <button class="move-btn wide-btn" onclick="addMove('l')">l</button>
-                            <button class="move-btn wide-btn" onclick="addMove('u')">u</button>
-                            <button class="move-btn wide-btn" onclick="addMove('d')">d</button>
-                            <button class="move-btn wide-btn" onclick="addMove('f')">f</button>
-                            <button class="move-btn wide-btn" onclick="addMove('b')">b</button>
-                        </div>
-
-                        <!-- Settings -->
+                        <!-- Compact Settings -->
                         <div class="settings-grid">
                             <div class="setting-item">
                                 <label>Size:</label>
                                 <select id="cubeSize">
-                                    <option value="3">3x3x3</option>
-                                    <option value="2">2x2x2</option>
-                                    <option value="4">4x4x4</option>
+                                    <option value="3">3x3</option>
+                                    <option value="2">2x2</option>
+                                    <option value="4">4x4</option>
                                 </select>
                             </div>
                             <div class="setting-item">
@@ -381,24 +397,45 @@
                             </div>
                         </div>
 
-                        <!-- Action Buttons -->
-                        <div class="action-buttons">
-                            <button class="action-btn" onclick="updateCube()">Execute</button>
-                            <button class="action-btn" onclick="clearAlgorithm()">Clear</button>
-                            <button class="action-btn" onclick="undoLastMove()">Undo</button>
+                        <!-- More Actions -->
+                        <div class="button-grid modifier-buttons">
                             <button class="action-btn" onclick="scrambleCube()">Scramble</button>
                             <button class="action-btn" onclick="toggleMoveText()">Notation</button>
+                            <button class="move-btn rotation-btn" onclick="addMove('x')">x</button>
+                            <button class="move-btn rotation-btn" onclick="addMove('y')">y</button>
                         </div>
+
+                        <!-- Advanced Moves (Collapsible) -->
+                        <details style="margin-top: 8px;">
+                            <summary style="font-size: 11px; font-weight: 600; cursor: pointer; padding: 4px 0;">Advanced Moves</summary>
+                            
+                            <div class="section-title" style="margin-top: 8px;">Middle Layers</div>
+                            <div class="button-grid middle-buttons">
+                                <button class="move-btn middle-btn" onclick="addMove('M')">M</button>
+                                <button class="move-btn middle-btn" onclick="addMove('E')">E</button>
+                                <button class="move-btn middle-btn" onclick="addMove('S')">S</button>
+                            </div>
+
+                            <div class="section-title">Wide Turns</div>
+                            <div class="button-grid wide-buttons">
+                                <button class="move-btn wide-btn" onclick="addMove('r')">r</button>
+                                <button class="move-btn wide-btn" onclick="addMove('l')">l</button>
+                                <button class="move-btn wide-btn" onclick="addMove('u')">u</button>
+                                <button class="move-btn wide-btn" onclick="addMove('d')">d</button>
+                                <button class="move-btn wide-btn" onclick="addMove('f')">f</button>
+                                <button class="move-btn wide-btn" onclick="addMove('b')">b</button>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </div>
 
             <!-- Detail Cube -->
             <div class="cube-section">
-                <h3>Detail Analysis - Slow Motion</h3>
+                <h3>Detail Analysis</h3>
                 <div class="cube-container">
-                    <div class="cube" style="width:280px; height:299px">
-                        <script>AnimCube3("move=R U R' U'&speed=20&buttonbar=1&movetext=1&hint=10&scale=2&align=1")</script>
+                    <div class="cube" style="width:240px; height:259px">
+                        <script>AnimCube3("move=R U R' U'&speed=20&buttonbar=1&movetext=1&hint=10&scale=3&align=1")</script>
                     </div>
                 </div>
             </div>
