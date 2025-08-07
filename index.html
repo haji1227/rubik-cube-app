@@ -50,6 +50,61 @@
             padding: 20px;
         }
         
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cube-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .cube {
+            display: inline-block;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .cube-description {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .feature-list li strong {
+            color: #333;
+        }
+        
         .controls-section {
             background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
             border-radius: 15px;
@@ -113,7 +168,7 @@
             border: none;
             cursor: pointer;
             font-weight: 600;
-            min-width: 100px;
+            min-width: 80px;
         }
         
         button:hover {
@@ -126,9 +181,86 @@
             transform: translateY(0);
         }
         
-        .algorithm-input {
-            flex: 1;
-            min-width: 200px;
+        .algorithm-display {
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            min-height: 50px;
+            word-wrap: break-word;
+        }
+        
+        .button-grid {
+            display: grid;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        
+        .face-buttons {
+            grid-template-columns: repeat(6, 1fr);
+        }
+        
+        .modifier-buttons {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .rotation-buttons {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .middle-buttons {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .wide-buttons {
+            grid-template-columns: repeat(6, 1fr);
+        }
+        
+        .move-btn {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 4px;
+            min-width: 50px;
+        }
+        
+        .move-btn:hover {
+            background: linear-gradient(45deg, #1976D2, #2196F3);
+        }
+        
+        .modifier-btn {
+            background: linear-gradient(45deg, #FF9800, #F57000);
+        }
+        
+        .modifier-btn:hover {
+            background: linear-gradient(45deg, #F57000, #FF9800);
+        }
+        
+        .rotation-btn {
+            background: linear-gradient(45deg, #9C27B0, #7B1FA2);
+        }
+        
+        .rotation-btn:hover {
+            background: linear-gradient(45deg, #7B1FA2, #9C27B0);
+        }
+        
+        .middle-btn {
+            background: linear-gradient(45deg, #4CAF50, #388E3C);
+        }
+        
+        .middle-btn:hover {
+            background: linear-gradient(45deg, #388E3C, #4CAF50);
+        }
+        
+        .wide-btn {
+            background: linear-gradient(45deg, #607D8B, #455A64);
+        }
+        
+        .wide-btn:hover {
+            background: linear-gradient(45deg, #455A64, #607D8B);
         }
         
         .speed-control {
@@ -155,105 +287,30 @@
             text-align: center;
         }
         
-        .quick-algorithms {
+        .action-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        
-        .algo-btn {
-            background: linear-gradient(45deg, #2196F3, #1976D2);
-            font-size: 12px;
-            padding: 6px 12px;
-            min-width: auto;
-        }
-        
-        .algo-btn:hover {
-            background: linear-gradient(45deg, #1976D2, #2196F3);
-        }
-        
-        .cube-section {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        
-        .cube-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
             gap: 10px;
-        }
-        
-        .cube-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .cube {
-            display: inline-block;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .cube-description {
-            flex: 1;
-            min-width: 250px;
-        }
-        
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .feature-list li {
-            background: #f8f9fa;
-            margin: 8px 0;
-            padding: 10px;
-            border-radius: 8px;
-            border-left: 4px solid #4CAF50;
-        }
-        
-        .feature-list li strong {
-            color: #333;
-        }
-        
-        .notation-help {
-            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 2px solid #ffab40;
-        }
-        
-        .notation-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
             margin-top: 15px;
         }
         
-        .notation-item {
-            background: white;
-            padding: 10px;
-            border-radius: 8px;
-            border-left: 4px solid #ff9800;
+        .action-btn {
+            background: linear-gradient(45deg, #E91E63, #C2185B);
+            font-size: 14px;
+            padding: 10px 15px;
         }
         
-        .keyboard-shortcuts {
-            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
-            border-radius: 15px;
-            padding: 15px;
-            margin-top: 20px;
+        .action-btn:hover {
+            background: linear-gradient(45deg, #C2185B, #E91E63);
+        }
+        
+        .button-section {
+            margin: 15px 0;
+        }
+        
+        .button-section h4 {
+            color: #333;
+            margin-bottom: 8px;
             font-size: 14px;
         }
         
@@ -281,8 +338,12 @@
                 align-items: center;
             }
             
-            .quick-algorithms {
-                justify-content: center;
+            .face-buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .wide-buttons {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
     </style>
@@ -294,69 +355,11 @@
         </div>
         
         <div class="main-content">
-            <!-- メインコントロール -->
-            <div class="controls-section">
-                <div class="controls-header">
-                    🎮 メインコントロール
-                </div>
-                
-                <div class="control-grid">
-                    <div class="control-group">
-                        <div class="control-row">
-                            <label>アルゴリズム:</label>
-                            <input type="text" id="algorithm" class="algorithm-input" value="R U R' U R U2 R'" placeholder="例: R U R' U R U2 R'">
-                        </div>
-                        <div class="quick-algorithms">
-                            <button class="algo-btn" onclick="setAlgorithm('R U R\' U R U2 R\'')">Tパーム</button>
-                            <button class="algo-btn" onclick="setAlgorithm('F R U\' R\' U\' R U R\' F\'')">OLL 57</button>
-                            <button class="algo-btn" onclick="setAlgorithm('R U R\' F\' R U R\' U\' R\' F R2 U\' R\'')">Tパーム</button>
-                            <button class="algo-btn" onclick="setAlgorithm('x R\' U R D\' R\' U\' R D')">Aパーム</button>
-                            <button class="algo-btn" onclick="setAlgorithm('M2 U M2 U2 M2 U M2')">Hパーム</button>
-                        </div>
-                    </div>
-                    
-                    <div class="control-group">
-                        <div class="control-row">
-                            <label>キューブサイズ:</label>
-                            <select id="cubeSize">
-                                <option value="3">3x3x3</option>
-                                <option value="2">2x2x2</option>
-                                <option value="4">4x4x4</option>
-                            </select>
-                        </div>
-                        <div class="control-row">
-                            <label>透明表示:</label>
-                            <input type="range" id="hintLevel" min="0" max="15" value="6" class="speed-slider">
-                            <span id="hintValue" class="speed-value">6</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="control-grid">
-                    <div class="control-group">
-                        <div class="control-row speed-control">
-                            <label>スピード:</label>
-                            <input type="range" id="speed" min="1" max="25" value="12" class="speed-slider">
-                            <span id="speedValue" class="speed-value">12</span>
-                        </div>
-                    </div>
-                    
-                    <div class="control-group">
-                        <div class="control-row">
-                            <button onclick="updateCube()">🎬 実行</button>
-                            <button onclick="resetCube()">🔄 リセット</button>
-                            <button onclick="scrambleCube()">🎲 スクランブル</button>
-                            <button onclick="toggleMoveText()">📝 記号表示</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- メインキューブ - リアルタイム追跡 -->
-            <div class="cube-section">
-                <h3>🎯 メイン - リアルタイム回転追跡</h3>
+            <!-- メインキューブモデル -->
+            <div class="section">
+                <h3>🎯 メインキューブ - リアルタイム回転追跡</h3>
                 <div class="cube-container">
-                    <div class="cube" style="width:350px; height:369px" id="mainCube">
+                    <div class="cube" style="width:380px; height:399px" id="mainCube">
                         <script>AnimCube3("move=R U R' U R U2 R'&buttonbar=1&movetext=1&hint=6&scale=1&speed=12")</script>
                     </div>
                     <div class="cube-description">
@@ -373,18 +376,18 @@
                             <li><strong>面の回転:</strong> キューブ上でドラッグ</li>
                             <li><strong>全体回転:</strong> キューブの外側をドラッグ</li>
                             <li><strong>再生コントロール:</strong> ボタンまたはプログレスバー</li>
-                            <li><strong>透明度調整:</strong> 上のスライダーで調整</li>
+                            <li><strong>透明度調整:</strong> 下のコントロールで調整</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <!-- サブキューブ - 詳細追跡 -->
-            <div class="cube-section">
+            <div class="section">
                 <h3>🔍 詳細追跡 - ピース動作解析</h3>
                 <div class="cube-container">
-                    <div class="cube" style="width:280px; height:299px">
-                        <script>AnimCube3("move=R U R' U'&speed=20&buttonbar=1&movetext=1&hint=10&scale=3&align=1")</script>
+                    <div class="cube" style="width:300px; height:319px">
+                        <script>AnimCube3("move=R U R' U'&speed=20&buttonbar=1&movetext=1&hint=10&scale=2&align=1")</script>
                     </div>
                     <div class="cube-description">
                         <h4>📊 解析機能:</h4>
@@ -398,36 +401,110 @@
                 </div>
             </div>
 
-            <!-- 記号解説 -->
-            <div class="notation-help">
-                <h3>📝 回転記号ガイド</h3>
-                <div class="notation-grid">
-                    <div class="notation-item">
-                        <strong>基本回転:</strong><br>
-                        R, L, U, D, F, B<br>
-                        <small>右、左、上、下、前、後面</small>
-                    </div>
-                    <div class="notation-item">
-                        <strong>方向修飾:</strong><br>
-                        R' (反時計回り)<br>
-                        R2 (180度回転)
-                    </div>
-                    <div class="notation-item">
-                        <strong>中間層:</strong><br>
-                        M, E, S<br>
-                        <small>縦中央、横中央、前後中央</small>
-                    </div>
-                    <div class="notation-item">
-                        <strong>全体回転:</strong><br>
-                        x, y, z<br>
-                        <small>キューブ全体の回転</small>
+            <!-- メインコントロール -->
+            <div class="controls-section">
+                <div class="controls-header">
+                    🎮 メインコントロール
+                </div>
+                
+                <!-- アルゴリズム表示 -->
+                <div>
+                    <h4>現在のアルゴリズム:</h4>
+                    <div class="algorithm-display" id="algorithmDisplay">R U R' U R U2 R'</div>
+                </div>
+
+                <!-- 基本回転ボタン -->
+                <div class="button-section">
+                    <h4>🔄 基本回転 (F:前, B:後, R:右, L:左, U:上, D:下)</h4>
+                    <div class="button-grid face-buttons">
+                        <button class="move-btn" onclick="addMove('F')">F</button>
+                        <button class="move-btn" onclick="addMove('B')">B</button>
+                        <button class="move-btn" onclick="addMove('R')">R</button>
+                        <button class="move-btn" onclick="addMove('L')">L</button>
+                        <button class="move-btn" onclick="addMove('U')">U</button>
+                        <button class="move-btn" onclick="addMove('D')">D</button>
                     </div>
                 </div>
-            </div>
 
-            <div class="keyboard-shortcuts">
-                <strong>⌨️ キーボードショートカット:</strong>
-                Ctrl+Enter: 実行 | Ctrl+S: スクランブル | Ctrl+R: リセット
+                <!-- 修飾子ボタン -->
+                <div class="button-section">
+                    <h4>🔧 修飾子 (反時計回り、180度回転)</h4>
+                    <div class="button-grid modifier-buttons">
+                        <button class="move-btn modifier-btn" onclick="addMove('\'')">\'</button>
+                        <button class="move-btn modifier-btn" onclick="addMove('2')">2</button>
+                        <button class="move-btn modifier-btn" onclick="addMove('2\'')">2\'</button>
+                        <button class="move-btn modifier-btn" onclick="addMove(' ')">[空白]</button>
+                    </div>
+                </div>
+
+                <!-- キューブ全体回転 -->
+                <div class="button-section">
+                    <h4>🌀 キューブ全体回転 (x:R軸, y:U軸, z:F軸)</h4>
+                    <div class="button-grid rotation-buttons">
+                        <button class="move-btn rotation-btn" onclick="addMove('x')">x</button>
+                        <button class="move-btn rotation-btn" onclick="addMove('y')">y</button>
+                        <button class="move-btn rotation-btn" onclick="addMove('z')">z</button>
+                    </div>
+                </div>
+
+                <!-- 中間層回転 -->
+                <div class="button-section">
+                    <h4>🎯 中間層回転 (M:L-R間, E:U-D間, S:F-B間)</h4>
+                    <div class="button-grid middle-buttons">
+                        <button class="move-btn middle-btn" onclick="addMove('M')">M</button>
+                        <button class="move-btn middle-btn" onclick="addMove('E')">E</button>
+                        <button class="move-btn middle-btn" onclick="addMove('S')">S</button>
+                    </div>
+                </div>
+
+                <!-- ワイド回転 -->
+                <div class="button-section">
+                    <h4>📏 ワイド回転 (2層同時回転)</h4>
+                    <div class="button-grid wide-buttons">
+                        <button class="move-btn wide-btn" onclick="addMove('r')">r</button>
+                        <button class="move-btn wide-btn" onclick="addMove('l')">l</button>
+                        <button class="move-btn wide-btn" onclick="addMove('u')">u</button>
+                        <button class="move-btn wide-btn" onclick="addMove('d')">d</button>
+                        <button class="move-btn wide-btn" onclick="addMove('f')">f</button>
+                        <button class="move-btn wide-btn" onclick="addMove('b')">b</button>
+                    </div>
+                </div>
+
+                <!-- 設定コントロール -->
+                <div class="control-grid">
+                    <div class="control-group">
+                        <div class="control-row">
+                            <label>キューブサイズ:</label>
+                            <select id="cubeSize">
+                                <option value="3">3x3x3</option>
+                                <option value="2">2x2x2</option>
+                                <option value="4">4x4x4</option>
+                            </select>
+                        </div>
+                        <div class="control-row speed-control">
+                            <label>スピード:</label>
+                            <input type="range" id="speed" min="1" max="25" value="12" class="speed-slider">
+                            <span id="speedValue" class="speed-value">12</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-row speed-control">
+                            <label>透明表示:</label>
+                            <input type="range" id="hintLevel" min="0" max="15" value="6" class="speed-slider">
+                            <span id="hintValue" class="speed-value">6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- アクションボタン -->
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="updateCube()">🎬 実行</button>
+                    <button class="action-btn" onclick="clearAlgorithm()">🗑️ クリア</button>
+                    <button class="action-btn" onclick="undoLastMove()">↶ 戻る</button>
+                    <button class="action-btn" onclick="scrambleCube()">🎲 スクランブル</button>
+                    <button class="action-btn" onclick="toggleMoveText()">📝 記号表示</button>
+                </div>
             </div>
         </div>
     </div>
@@ -440,6 +517,7 @@
 
     <script>
         // グローバル変数
+        let currentAlgorithm = 'R U R\' U R U2 R\'';
         let showingMoveText = true;
         let currentSize = 3;
 
@@ -452,15 +530,48 @@
             document.getElementById('hintValue').textContent = this.value;
         });
 
-        // アルゴリズム設定関数
-        function setAlgorithm(algo) {
-            document.getElementById('algorithm').value = algo;
+        // 動作追加関数
+        function addMove(move) {
+            if (currentAlgorithm === 'R U R\' U R U2 R\'' && move !== ' ') {
+                // デフォルトアルゴリズムの場合はクリア
+                currentAlgorithm = '';
+            }
+            
+            currentAlgorithm += move;
+            updateAlgorithmDisplay();
+        }
+
+        // アルゴリズム表示更新
+        function updateAlgorithmDisplay() {
+            document.getElementById('algorithmDisplay').textContent = currentAlgorithm || '(空白)';
+        }
+
+        // アルゴリズムクリア
+        function clearAlgorithm() {
+            currentAlgorithm = '';
+            updateAlgorithmDisplay();
             updateCube();
+        }
+
+        // 最後の動作を戻す
+        function undoLastMove() {
+            if (currentAlgorithm.length > 0) {
+                // 最後のスペースまたは文字を削除
+                if (currentAlgorithm.endsWith(' ')) {
+                    currentAlgorithm = currentAlgorithm.slice(0, -1);
+                } else if (currentAlgorithm.endsWith('2\'')) {
+                    currentAlgorithm = currentAlgorithm.slice(0, -2);
+                } else if (currentAlgorithm.endsWith('\'') || currentAlgorithm.endsWith('2')) {
+                    currentAlgorithm = currentAlgorithm.slice(0, -1);
+                } else {
+                    currentAlgorithm = currentAlgorithm.slice(0, -1);
+                }
+                updateAlgorithmDisplay();
+            }
         }
 
         // メインキューブ更新関数
         function updateCube() {
-            const algorithm = document.getElementById('algorithm').value;
             const size = document.getElementById('cubeSize').value;
             const speed = document.getElementById('speed').value;
             const hint = document.getElementById('hintLevel').value;
@@ -472,6 +583,7 @@
             cubeDiv.innerHTML = '';
             
             const moveTextParam = showingMoveText ? '&movetext=1' : '&movetext=0';
+            const algorithm = currentAlgorithm || '';
             const params = `move=${encodeURIComponent(algorithm)}&buttonbar=1&speed=${speed}&hint=${hint}&scale=1${moveTextParam}`;
             
             // サイズに応じた関数呼び出し
@@ -482,12 +594,6 @@
             } else {
                 alert(`${size}x${size}x${size}のキューブファイル(AnimCube${size}.js)が見つかりません。`);
             }
-        }
-
-        // リセット関数
-        function resetCube() {
-            document.getElementById('algorithm').value = '';
-            updateCube();
         }
 
         // スクランブル関数
@@ -505,7 +611,8 @@
                 "F U R U' R' F'"
             ];
             const randomScramble = scrambles[Math.floor(Math.random() * scrambles.length)];
-            document.getElementById('algorithm').value = randomScramble;
+            currentAlgorithm = randomScramble;
+            updateAlgorithmDisplay();
             updateCube();
         }
 
@@ -529,7 +636,7 @@
                         break;
                     case 'r':
                         event.preventDefault();
-                        resetCube();
+                        clearAlgorithm();
                         break;
                 }
             }
@@ -542,21 +649,14 @@
 
         // ページ読み込み時の初期化
         document.addEventListener('DOMContentLoaded', function() {
+            updateAlgorithmDisplay();
             console.log('🧩 ルービックキューブシミュレーター準備完了');
-            console.log('⌨️ キーボードショートカット: Ctrl+Enter(実行), Ctrl+S(スクランブル), Ctrl+R(リセット)');
+            console.log('⌨️ キーボードショートカット: Ctrl+Enter(実行), Ctrl+S(スクランブル), Ctrl+R(クリア)');
         });
 
         // タッチデバイス対応
         if ('ontouchstart' in window) {
             document.body.style.touchAction = 'manipulation';
-        }
-
-        // PWA用サービスワーカー登録（オプション）
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                // サービスワーカーファイルがある場合のみ登録
-                // navigator.serviceWorker.register('/sw.js');
-            });
         }
     </script>
 </body>
