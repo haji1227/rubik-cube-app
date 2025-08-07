@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimCubeJS - ルービックキューブシミュレーター（オフライン版）</title>
+    
+    <!-- PWA設定 -->
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="RubikCube">
+    <meta name="application-name" content="RubikCube">
+    
+    <!-- アイコン設定 -->
+    <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjNENBRjUwIiByeD0iNjQiLz4KPHJlY3QgeD0iNjQiIHk9IjY0IiB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgZmlsbD0iI0ZGRiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjQiLz4KPHJlY3QgeD0iMTkyIiB5PSI2NCIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIGZpbGw9IiNGRkYiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxyZWN0IHg9IjMyMCIgeT0iNjQiIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiBmaWxsPSIjRkZGIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iNCIvPgo8cmVjdCB4PSI2NCIgeT0iMTkyIiB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgZmlsbD0iI0ZGRkYwMCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjQiLz4KPHJlY3QgeD0iMTkyIiB5PSIxOTIiIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiBmaWxsPSIjRkY0NjAwIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iNCIvPgo8cmVjdCB4PSIzMjAiIHk9IjE5MiIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIGZpbGw9IiNGRkZGMDAiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxyZWN0IHg9IjY0IiB5PSIzMjAiIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiBmaWxsPSIjMDBGRjAwIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iNCIvPgo8cmVjdCB4PSIxOTIiIHk9IjMyMCIgd2lkdGg9IjEyOCIgaGVpZ
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .cube-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .cube-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .cube {
+            display: inline-block;
+        }
+        .description {
+            flex: 1;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-radius: 5px;
+        }
+        .control-group {
+            margin: 10px 0;
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+        input, select {
+            padding: 5px;
+            margin: 2px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .notation-help {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .download-section {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .warning {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧩 AnimCubeJS - ルービックキューブシミュレーター</h1>
+        
+        <div class="warning">
+            <strong>⚠️ 注意:</strong> このページを完全にオフラインで使用するには、以下の手順が必要です。
+        </div>
+
+        <div class="download-section">
+            <h3>📥 オフラインセットアップ手順</h3>
+            <ol>
+                <li><strong>AnimCubeJSファイルをダウンロード:</strong>
+                    <ul>
+                        <li><a href="https://animcubejs.cubing.net/sources/zip/3x3x3-AnimCubeJS.zip" target="_blank">3x3x3 AnimCubeJS (13 kB)</a></li>
+                        <li><a href="https://animcubejs.cubing.net/sources/zip/2x2x2-AnimCubeJS.zip" target="_blank">2x2x2 AnimCubeJS (12 kB)</a></li>
+                        <li><a href="https://animcubejs.cubing.net/sources/zip/4x4x4-AnimCubeJS.zip" target="_blank">4x4x4 AnimCubeJS (13 kB)</a></li>
+                    </ul>
+                </li>
+                <li><strong>ファイルを展開:</strong> ダウンロードしたZIPファイルを展開し、<code>AnimCube3.js</code>（または他のサイズ）をこのHTMLファイルと同じフォルダに配置</li>
+                <li><strong>HTMLファイルを編集:</strong> 下記のスクリプト参照部分のコメントアウトを解除</li>
+                <li><strong>ブラウザで開く:</strong> このHTMLファイルをブラウザで開く</li>
+            </ol>
+        </div>
+
+        <!-- 
+        オフライン使用時は以下のコメントを解除し、対応するサイズのJSファイルを配置してください
+        <script src="AnimCube3.js"></script>
+        -->
+        
+        <!-- オンラインデモ用（オフライン時は削除） -->
+        <script src="https://animcubejs.cubing.net/AnimCube3.js"></script>
+
+        <div class="notation-help">
+            <h3>📝 基本的な回転記号</h3>
+            <ul>
+                <li><strong>R</strong> - 右面を時計回りに90度</li>
+                <li><strong>R'</strong> - 右面を反時計回りに90度</li>
+                <li><strong>R2</strong> - 右面を180度</li>
+                <li><strong>U, D, F, B, L</strong> - 上、下、前、後、左面</li>
+                <li><strong>x, y, z</strong> - キューブ全体の回転</li>
+                <li><strong>M, E, S</strong> - 中間層の回転</li>
+            </ul>
+        </div>
+
+        <div class="controls">
+            <h3>🎮 コントロール</h3>
+            <div class="control-group">
+                <label>アルゴリズム:</label>
+                <input type="text" id="algorithm" value="R U R' U R U2 R'" placeholder="例: R U R' U R U2 R'">
+                <button onclick="updateCube()">適用</button>
+                <button onclick="resetCube()">リセット</button>
+            </div>
+            <div class="control-group">
+                <label>サイズ:</label>
+                <select id="cubeSize">
+                    <option value="3">3x3x3</option>
+                    <option value="2">2x2x2</option>
+                    <option value="4">4x4x4</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>スピード:</label>
+                <input type="range" id="speed" min="1" max="20" value="10">
+                <span id="speedValue">10</span>
+            </div>
+            <div class="control-group">
+                <button onclick="scrambleCube()">スクランブル</button>
+                <button onclick="showMoveText()">記号表示切替</button>
+            </div>
+        </div>
+
+        <div class="cube-section">
+            <h3>🎯 基本シミュレーター</h3>
+            <div class="cube-container">
+                <div class="cube" style="width:300px; height:319px" id="mainCube">
+                    <script>AnimCube3("move=R U R' U R U2 R'&buttonbar=1&movetext=1")</script>
+                </div>
+                <div class="description">
+                    <h4>基本的な使い方:</h4>
+                    <ul>
+                        <li><strong>マウス操作:</strong> キューブ上でドラッグして面を回転</li>
+                        <li><strong>キューブ全体の回転:</strong> キューブの外側をドラッグ</li>
+                        <li><strong>ボタン:</strong> 再生、停止、巻き戻し</li>
+                        <li><strong>プログレスバー:</strong> クリックして任意の位置にジャンプ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="cube-section">
+            <h3>🔄 リアルタイム回転追跡</h3>
+            <div class="cube-container">
+                <div class="cube" style="width:250px; height:269px">
+                    <script>AnimCube3("move=R U R' U'&speed=15&buttonbar=1&movetext=1&hint=6&scale=2")</script>
+                </div>
+                <div class="description">
+                    <h4>ピース追跡機能:</h4>
+                    <ul>
+                        <li>各サブキューブの動きを詳細に観察</li>
+                        <li>透明表示で裏面も確認可能</li>
+                        <li>スロー再生でピースの移動を追跡</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="cube-section">
+            <h3>🎨 カスタムカラー</h3>
+            <div class="cube-container">
+                <div class="cube" style="width:200px; height:219px">
+                    <script>AnimCube3("facelets=gggggggggrrrrrrrrrwwwwwwwwwbbbbbbbbbyyyyyyyyyooooooooo&move=x y z")</script>
+                </div>
+                <div class="description">
+                    <h4>カスタマイズ例:</h4>
+                    <ul>
+                        <li>特定の面だけ色を変更</li>
+                        <li>パターンの確認</li>
+                        <li>学習用の色分け</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="cube-section">
+            <h3>⚡ フィンガートリック表示</h3>
+            <div class="cube-container">
+                <div class="cube" style="width:250px; height:269px">
+                    <script>AnimCube3("move={右手人差し指} R U R' U' {右手親指} R U R' {左手人差し指} U' R U R' U' {完了}&speed=5&buttonbar=1")</script>
+                </div>
+                <div class="description">
+                    <h4>コメント機能:</h4>
+                    <ul>
+                        <li>各ステップにコメント表示</li>
+                        <li>フィンガートリックの説明</li>
+                        <li>学習支援機能</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // グローバル変数
+        let currentCubeId = 'mainCube';
+        let currentSize = 3;
+        let showingMoveText = true;
+
+        // スピードスライダーの値表示更新
+        document.getElementById('speed').addEventListener('input', function() {
+            document.getElementById('speedValue').textContent = this.value;
+        });
+
+        // キューブ更新関数
+        function updateCube() {
+            const algorithm = document.getElementById('algorithm').value;
+            const size = document.getElementById('cubeSize').value;
+            const speed = document.getElementById('speed').value;
+            
+            currentSize = parseInt(size);
+            
+            // 新しいキューブを作成
+            const cubeDiv = document.getElementById('mainCube');
+            cubeDiv.innerHTML = '';
+            
+            const moveTextParam = showingMoveText ? '&movetext=1' : '&movetext=0';
+            const params = `move=${algorithm}&buttonbar=1&speed=${speed}${moveTextParam}`;
+            
+            // サイズに応じてAnimCube関数を呼び出し
+            if (typeof window[`AnimCube${size}`] === 'function') {
+                const script = document.createElement('script');
+                script.textContent = `AnimCube${size}("${params}")`;
+                cubeDiv.appendChild(script);
+            } else {
+                alert(`${size}x${size}x${size}のキューブはロードされていません。対応するAnimCube${size}.jsファイルが必要です。`);
+            }
+        }
+
+        // リセット関数
+        function resetCube() {
+            document.getElementById('algorithm').value = '';
+            updateCube();
+        }
+
+        // スクランブル関数
+        function scrambleCube() {
+            const scrambles = [
+                "R U R' U R U2 R'",
+                "F R U' R' U' R U R' F'",
+                "R U R' F' R U R' U' R' F R2 U' R'",
+                "U R U' L' U R' U' L",
+                "x R' U R D' R' U' R D",
+                "M2 U M2 U2 M2 U M2"
+            ];
+            const randomScramble = scrambles[Math.floor(Math.random() * scrambles.length)];
+            document.getElementById('algorithm').value = randomScramble;
+            updateCube();
+        }
+
+        // 記号表示切替
+        function showMoveText() {
+            showingMoveText = !showingMoveText;
+            updateCube();
+        }
+
+        // キーボードショートカット
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey) {
+                switch(event.key) {
+                    case 'Enter':
+                        event.preventDefault();
+                        updateCube();
+                        break;
+                    case 's':
+                        event.preventDefault();
+                        scrambleCube();
+                        break;
+                    case 'r':
+                        event.preventDefault();
+                        resetCube();
+                        break;
+                }
+            }
+        });
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('AnimCubeJS オフライン版が読み込まれました');
+            console.log('キーボードショートカット:');
+            console.log('- Ctrl+Enter: アルゴリズム適用');
+            console.log('- Ctrl+S: スクランブル');
+            console.log('- Ctrl+R: リセット');
+        });
+    </script>
+</body>
+</html>
