@@ -195,7 +195,6 @@
         .action-btn {
             background: linear-gradient(45deg, #E91E63, #C2185B);
             color: white;
-            padding: 12px 16px;
         }
         
         .action-btn:hover, .action-btn:active {
@@ -274,7 +273,7 @@
             text-align: left;
         }
         
-        @media (max-width: 768px) {
+                    @media (max-width: 768px) {
             .container {
                 margin: 2px;
                 border-radius: 8px;
@@ -289,21 +288,11 @@
                 padding: 6px;
             }
             
-            .face-action-grid {
-                grid-template-columns: 1fr;
-                gap: 6px;
-            }
-            
             .face-buttons-section { 
-                grid-template-columns: repeat(3, 1fr); 
-            }
-            
-            .quick-actions {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(3, 1fr) !important; 
             }
             
             .wide-buttons { grid-template-columns: repeat(3, 1fr); }
-            .modifier-buttons { grid-template-columns: repeat(2, 1fr); }
             
             button {
                 padding: 8px 4px;
@@ -348,42 +337,34 @@
                         <!-- Algorithm Display -->
                         <div class="algorithm-display" id="algorithmDisplay">R U R' U R U2 R'</div>
 
-                        <!-- Face Moves + Quick Actions -->
-                        <div class="section-title">Basic Moves & Actions</div>
-                        <div class="face-action-grid">
-                            <div class="face-buttons-section">
-                                <button class="move-btn" onclick="addMove('F')">F</button>
-                                <button class="move-btn" onclick="addMove('B')">B</button>
-                                <button class="move-btn" onclick="addMove('R')">R</button>
-                                <button class="move-btn" onclick="addMove('L')">L</button>
-                                <button class="move-btn" onclick="addMove('U')">U</button>
-                                <button class="move-btn" onclick="addMove('D')">D</button>
-                            </div>
-                            <div class="quick-actions">
-                                <button class="action-btn" onclick="updateCube()">Execute</button>
-                                <button class="action-btn" onclick="clearAlgorithm()">Clear</button>
-                                <button class="action-btn" onclick="undoLastMove()">Undo</button>
-                            </div>
+                        <!-- Face Moves -->
+                        <div class="section-title">Basic Moves</div>
+                        <div class="face-buttons-section" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-bottom: 8px;">
+                            <button class="move-btn" onclick="addMove('R')">R</button>
+                            <button class="move-btn" onclick="addMove('U')">U</button>
+                            <button class="move-btn" onclick="addMove('D')">D</button>
+                            <button class="move-btn" onclick="addMove('L')">L</button>
+                            <button class="move-btn" onclick="addMove('F')">F</button>
+                            <button class="move-btn" onclick="addMove('B')">B</button>
                         </div>
 
-                        <!-- Modifiers (no title) -->
-                        <div class="button-grid modifier-buttons">
+                        <!-- Modifiers (horizontal row above actions) -->
+                        <div class="button-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 8px;">
                             <button class="move-btn modifier-btn" onclick="addMove('\'')">\'</button>
                             <button class="move-btn modifier-btn" onclick="addMove('2')">2</button>
                             <button class="move-btn modifier-btn" onclick="addMove('2\'')">2\'</button>
                             <button class="move-btn modifier-btn" onclick="addMove(' ')">Space</button>
                         </div>
 
+                        <!-- Actions -->
+                        <div class="quick-actions" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 8px;">
+                            <button class="action-btn" onclick="clearAlgorithm()">Clear</button>
+                            <button class="set-btn" onclick="updateCube()">Set</button>
+                            <button class="action-btn" onclick="undoLastMove()">Undo</button>
+                        </div>
+
                         <!-- Compact Settings -->
-                        <div class="settings-grid">
-                            <div class="setting-item">
-                                <label>Size:</label>
-                                <select id="cubeSize">
-                                    <option value="3">3x3</option>
-                                    <option value="2">2x2</option>
-                                    <option value="4">4x4</option>
-                                </select>
-                            </div>
+                        <div class="settings-grid" style="grid-template-columns: repeat(2, 1fr);">
                             <div class="setting-item">
                                 <label>Speed:</label>
                                 <input type="range" id="speed" min="1" max="25" value="12" class="slider">
@@ -470,7 +451,6 @@
         // Global variables
         let currentAlgorithm = 'R U R\' U R U2 R\'';
         let showingMoveText = true;
-        let currentSize = 3;
 
         // Slider updates
         document.getElementById('speed').addEventListener('input', function() {
@@ -520,28 +500,21 @@
 
         // Update main cube
         function updateCube() {
-            const size = document.getElementById('cubeSize').value;
             const speed = document.getElementById('speed').value;
             const hint = document.getElementById('hintLevel').value;
             
-            currentSize = parseInt(size);
-            
             const algorithm = currentAlgorithm || '';
             
-            // Update main cube
+            // Update main cube (always 3x3x3)
             const cubeDiv = document.getElementById('mainCube');
             cubeDiv.innerHTML = '';
             
             const moveTextParam = showingMoveText ? '&movetext=1' : '&movetext=0';
             const params = `move=${encodeURIComponent(algorithm)}&buttonbar=1&speed=${speed}&hint=${hint}&scale=1${moveTextParam}`;
             
-            if (typeof window[`AnimCube${size}`] === 'function') {
-                const script = document.createElement('script');
-                script.textContent = `AnimCube${size}("${params}")`;
-                cubeDiv.appendChild(script);
-            } else {
-                alert(`AnimCube${size}.js not found`);
-            }
+            const script = document.createElement('script');
+            script.textContent = `AnimCube3("${params}")`;
+            cubeDiv.appendChild(script);
             
             // Update detail cube with enhanced tracking
             const detailCubeDiv = document.getElementById('detailCube');
@@ -549,22 +522,22 @@
                 detailCubeDiv.innerHTML = '';
                 const detailParams = `move=${encodeURIComponent(algorithm)}&speed=20&buttonbar=1&movetext=1&hint=12&scale=3&align=1&borderwidth=2`;
                 const detailScript = document.createElement('script');
-                detailScript.textContent = `AnimCube${size}("${detailParams}")`;
+                detailScript.textContent = `AnimCube3("${detailParams}")`;
                 detailCubeDiv.appendChild(detailScript);
             }
             
             // Update before/after cubes
-            updateComparisonCubes(algorithm, size);
+            updateComparisonCubes(algorithm);
         }
 
         // Update comparison cubes and tracking info
-        function updateComparisonCubes(algorithm, size) {
+        function updateComparisonCubes(algorithm) {
             // Before cube (solved state)
             const beforeCubeDiv = document.getElementById('beforeCube');
             if (beforeCubeDiv) {
                 beforeCubeDiv.innerHTML = '';
                 const beforeScript = document.createElement('script');
-                beforeScript.textContent = `AnimCube${size}("buttonbar=0&movetext=0&hint=0")`;
+                beforeScript.textContent = `AnimCube3("buttonbar=0&movetext=0&hint=0")`;
                 beforeCubeDiv.appendChild(beforeScript);
             }
             
@@ -573,7 +546,7 @@
             if (afterCubeDiv) {
                 afterCubeDiv.innerHTML = '';
                 const afterScript = document.createElement('script');
-                afterScript.textContent = `AnimCube${size}("move=${encodeURIComponent(algorithm)}&buttonbar=0&movetext=0&hint=0&initmove=${encodeURIComponent(algorithm)}")`;
+                afterScript.textContent = `AnimCube3("move=${encodeURIComponent(algorithm)}&buttonbar=0&movetext=0&hint=0&initmove=${encodeURIComponent(algorithm)}")`;
                 afterCubeDiv.appendChild(afterScript);
             }
             
@@ -636,7 +609,6 @@
         // Real-time updates
         document.getElementById('speed').addEventListener('change', updateCube);
         document.getElementById('hintLevel').addEventListener('change', updateCube);
-        document.getElementById('cubeSize').addEventListener('change', updateCube);
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
