@@ -1,7 +1,7 @@
 {
-  "name": "ルービックキューブシミュレーター",
+  "name": "Rubik's Cube Simulator",
   "short_name": "RubikCube",
-  "description": "AnimCubeJSを使ったルービックキューブシミュレーター",
+  "description": "AnimCubeJS & Rubik's Cube Simulator",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#4CAF50",
