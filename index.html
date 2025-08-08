@@ -409,8 +409,8 @@
             <div class="cube-section">
                 <h3>Piece Movement Analysis</h3>
                 <div class="cube-container">
-                    <div class="cube" style="width:240px; height:259px" id="detailCube">
-                        <script>AnimCube3("move=R U R' U'&speed=20&buttonbar=1&movetext=1&hint=12&scale=3&align=1&borderwidth=2")</script>
+                    <div class="cube" style="width:260px; height:290px" id="detailCube">
+                        <script>AnimCube3("move=R U R' U'&speed=20&buttonbar=1&movetext=1&hint=12&scale=3&align=1&borderwidth=2&buttonheight=16")</script>
                     </div>
                 </div>
             </div>
@@ -510,7 +510,7 @@
             cubeDiv.innerHTML = '';
             
             const moveTextParam = showingMoveText ? '&movetext=1' : '&movetext=0';
-            const params = `move=${encodeURIComponent(algorithm)}&buttonbar=1&speed=${speed}&hint=${hint}&scale=1${moveTextParam}`;
+            const params = `move=${encodeURIComponent(algorithm)}&buttonbar=1&speed=${speed}&hint=${hint}&scale=1&buttonheight=18${moveTextParam}`;
             
             const script = document.createElement('script');
             script.textContent = `AnimCube3("${params}")`;
@@ -520,7 +520,7 @@
             const detailCubeDiv = document.getElementById('detailCube');
             if (detailCubeDiv) {
                 detailCubeDiv.innerHTML = '';
-                const detailParams = `move=${encodeURIComponent(algorithm)}&speed=20&buttonbar=1&movetext=1&hint=12&scale=3&align=1&borderwidth=2`;
+                const detailParams = `move=${encodeURIComponent(algorithm)}&speed=20&buttonbar=1&movetext=1&hint=12&scale=3&align=1&borderwidth=2&buttonheight=16`;
                 const detailScript = document.createElement('script');
                 detailScript.textContent = `AnimCube3("${detailParams}")`;
                 detailCubeDiv.appendChild(detailScript);
