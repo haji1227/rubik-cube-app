@@ -124,6 +124,14 @@
                     <input type="text" id="sequenceB" class="commutator-input" placeholder="Sequence B" value="D R' D'" inputmode="none">
                 </div>
 
+                <!-- Result and Actions -->
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                    <div style="font-weight: bold; color: #ff9800;">=</div>
+                    <input type="text" id="commutatorResult" class="commutator-input" style="flex: 1;" 
+                           value="R U R' D R' D' R U' R' D R D'" 
+                           placeholder="Generated result or enter custom algorithm" inputmode="none">
+                </div>
+
                 <!-- Quick Input Buttons (ラベル削除済み) -->
                 <div class="button-grid face-buttons" style="margin-bottom: 8px;">
                     <button class="move-btn qi">R</button>
@@ -138,8 +146,8 @@
                 <div class="button-grid modifier-buttons" style="margin-bottom: 12px; grid-template-columns: repeat(5, 1fr);">
   <button class="modifier-btn qi">'</button>
   <button class="modifier-btn qi">2</button>
-  <button class="modifier-btn" id="backspaceBtn">BS</button>
   <button class="modifier-btn qi">Space</button>
+  <button class="modifier-btn" id="backspaceBtn">BS</button>
   <button class="action-btn" id="clearCurrent">Clear</button>
 </div>
 
@@ -150,14 +158,6 @@
                     <button class="preset-btn preset" data-a="R" data-b="U R U'">Corner 3-cycle</button>
                     <button class="preset-btn preset" data-a="R U' R'" data-b="F R F'">T-Perm Setup</button>
                     <button class="preset-btn preset" data-a="M'" data-b="U2 M U2">M-slice</button>
-                </div>
-
-                <!-- Result and Actions -->
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                    <div style="font-weight: bold; color: #ff9800;">=</div>
-                    <input type="text" id="commutatorResult" class="commutator-input" style="flex: 1;" 
-                           value="R U R' D R' D' R U' R' D R D'" 
-                           placeholder="Generated result or enter custom algorithm" inputmode="none">
                 </div>
 
                 <div class="button-grid" style="grid-template-columns: repeat(5, 1fr);">
