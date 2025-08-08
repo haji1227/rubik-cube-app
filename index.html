@@ -316,6 +316,23 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+        
+        /* AnimCubeJS Control Enhancement */
+        .cube canvas {
+            border-radius: 6px;
+        }
+        
+        /* Try to enhance AnimCubeJS controls - these target the internal elements */
+        .cube div[style*="position: absolute"] {
+            font-size: 14px !important;
+        }
+        
+        /* Target AnimCubeJS buttons if they have specific styling */
+        .cube button, .cube input[type="button"] {
+            min-height: 28px !important;
+            font-size: 13px !important;
+            padding: 4px 8px !important;
+        }
     </style>
 </head>
 <body>
@@ -338,7 +355,6 @@
                         <div class="algorithm-display" id="algorithmDisplay">R U R' U R U2 R'</div>
 
                         <!-- Face Moves -->
-                        <div class="section-title">Basic Moves</div>
                         <div class="face-buttons-section" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-bottom: 8px;">
                             <button class="move-btn" onclick="addMove('R')">R</button>
                             <button class="move-btn" onclick="addMove('U')">U</button>
@@ -348,7 +364,7 @@
                             <button class="move-btn" onclick="addMove('B')">B</button>
                         </div>
 
-                        <!-- Modifiers (horizontal row above actions) -->
+                        <!-- Modifiers -->
                         <div class="button-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 8px;">
                             <button class="move-btn modifier-btn" onclick="addMove('\'')">\'</button>
                             <button class="move-btn modifier-btn" onclick="addMove('2')">2</button>
@@ -385,8 +401,7 @@
                             <button class="move-btn rotation-btn" onclick="addMove('y')">y</button>
                         </div>
 
-                        <!-- Advanced Moves (Always Visible) -->
-                        <div class="section-title">Middle Layers & Wide Turns</div>
+                        <!-- Advanced Moves -->
                         <div class="button-grid middle-buttons">
                             <button class="move-btn middle-btn" onclick="addMove('M')">M</button>
                             <button class="move-btn middle-btn" onclick="addMove('E')">E</button>
@@ -510,7 +525,7 @@
             cubeDiv.innerHTML = '';
             
             const moveTextParam = showingMoveText ? '&movetext=1' : '&movetext=0';
-            const params = `move=${encodeURIComponent(algorithm)}&buttonbar=1&speed=${speed}&hint=${hint}&scale=1&buttonheight=18${moveTextParam}`;
+            const params = `move=${encodeURIComponent(algorithm)}&buttonbar=1&speed=${speed}&hint=${hint}&scale=0&buttonheight=25${moveTextParam}`;
             
             const script = document.createElement('script');
             script.textContent = `AnimCube3("${params}")`;
