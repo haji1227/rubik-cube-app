@@ -67,9 +67,29 @@
         .commutator-btn { background: linear-gradient(45deg, #FF9800, #F57000); color: white; }
         .commutator-btn:hover, .commutator-btn:active { background: linear-gradient(45deg, #F57000, #FF9800); }
         .settings-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 8px; }
-        .setting-item { display: flex; align-items: center; gap: 4px; }
-        .setting-item label { font-weight: 600; color: #555; min-width: 40px; font-size: 11px; }
-        input, select { flex: 1; padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 12px; }
+        .setting-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap; /* はみ出し防止 */
+}
+
+.setting-item label {
+  font-size: 11px;
+  min-width: auto; /* 固定幅やめる */
+}
+
+.setting-item input[type=range] {
+  flex: 1;
+  min-width: 0;
+}
+
+.setting-item .value-display {
+  padding: 2px 6px;
+  font-size: 11px;
+  min-width: auto;
+}
+
         .slider { flex: 1; height: 6px; background: #ddd; border-radius: 3px; outline: none; -webkit-appearance: none; }
         .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #4CAF50; cursor: pointer; }
         .value-display { background: #4CAF50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; min-width: 32px; text-align: center; }
@@ -81,7 +101,7 @@
         .preset-btn:hover { background: linear-gradient(45deg, #5E35B1, #673AB7); }
         @media (max-width: 768px) {
             .container { margin: 2px; border-radius: 8px; }
-            .commutator-builder { grid-template-columns: 1fr; gap: 4px; }
+            .commutator-builder { gap: 4px; }
             .face-buttons { grid-template-columns: repeat(3, 1fr) !important; }
             .wide-buttons { grid-template-columns: repeat(3, 1fr); }
             button { padding: 8px 4px; font-size: 11px; min-height: 32px; }
@@ -112,13 +132,17 @@
                     <button class="move-btn qi">L</button>
                     <button class="move-btn qi">F</button>
                     <button class="move-btn qi">B</button>
+                    <button class="move-btn qi">x</button>
+                    <button class="move-btn qi">y</button>
                 </div>
-                <div class="button-grid modifier-buttons" style="margin-bottom: 12px;">
-                    <button class="modifier-btn qi">'</button>
-                    <button class="modifier-btn qi">2</button>
-                    <button class="modifier-btn qi">Space</button>
-                    <button class="action-btn" id="clearCurrent">Clear</button>
-                </div>
+                <div class="button-grid modifier-buttons" style="margin-bottom: 12px; grid-template-columns: repeat(5, 1fr);">
+  <button class="modifier-btn qi">'</button>
+  <button class="modifier-btn qi">2</button>
+  <button class="modifier-btn" id="backspaceBtn">BS</button>
+  <button class="modifier-btn qi">Space</button>
+  <button class="action-btn" id="clearCurrent">Clear</button>
+</div>
+
 
                 <!-- Preset Commutators（ラベル削除済み） -->
                 <div class="preset-commutators" style="margin-bottom: 12px;">
@@ -156,44 +180,22 @@
                     <div class="controls-section">
                         <div class="algorithm-display" id="algorithmDisplay">R U R' D R' D' R U' R' D R D'</div>
 
-                        <!-- Face Moves -->
-                        <div class="button-grid face-buttons">
-                            <button class="move-btn add">R</button>
-                            <button class="move-btn add">U</button>
-                            <button class="move-btn add">D</button>
-                            <button class="move-btn add">L</button>
-                            <button class="move-btn add">F</button>
-                            <button class="move-btn add">B</button>
-                        </div>
+                        
 
-                        <!-- Modifiers -->
-                        <div class="button-grid modifier-buttons">
-                            <button class="modifier-btn add">'</button>
-                            <button class="modifier-btn add">2</button>
-                            <button class="modifier-btn add">2'</button>
-                            <button class="modifier-btn add">Space</button>
-                        </div>
+                        <div class="settings-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="setting-item">
+        <label>Speed:</label>
+        <input type="range" id="speed" min="1" max="25" value="12" class="slider">
+        <span id="speedValue" class="value-display">12</span>
+    </div>
+    <div class="setting-item">
+        <label>Hint:</label>
+        <input type="range" id="hintLevel" min="0" max="15" value="6" class="slider">
+        <span id="hintValue" class="value-display">6</span>
+    </div>
+</div>
 
-                        <!-- Settings (短めスライダー) -->
-                        <div class="settings-grid">
-                            <div class="setting-item">
-                                <label>Speed:</label>
-                                <input type="range" id="speed" min="1" max="25" value="12" class="slider">
-                                <span id="speedValue" class="value-display">12</span>
-                            </div>
-                            <div class="setting-item">
-                                <label>Hint:</label>
-                                <input type="range" id="hintLevel" min="0" max="15" value="6" class="slider">
-                                <span id="hintValue" class="value-display">6</span>
-                            </div>
-                        </div>
-
-                        <!-- More Actions (Scramble 削除) -->
-                        <div class="button-grid modifier-buttons">
-                            <button class="action-btn" id="toggleNotation">Notation</button>
-                            <button class="move-btn add">x</button>
-                            <button class="move-btn add">y</button>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -312,6 +314,43 @@
             lastCaret.end = 0;
             generateCommutator();
         }
+
+        function backspaceCurrentInput() {
+    let input = null;
+
+    if (lastFocusedInput && (lastFocusedInput.id === 'sequenceA' || lastFocusedInput.id === 'sequenceB')) {
+        input = lastFocusedInput;
+    } else if (document.activeElement && (document.activeElement.id === 'sequenceA' || document.activeElement.id === 'sequenceB')) {
+        input = document.activeElement;
+    } else {
+        input = document.getElementById('sequenceA');
+        input.focus();
+        lastCaret.start = input.value.length;
+        lastCaret.end = input.value.length;
+    }
+
+    let start = (lastCaret.start != null) ? lastCaret.start : input.selectionStart;
+    let end = (lastCaret.end != null) ? lastCaret.end : input.selectionEnd;
+
+    if (start === end && start > 0) {
+        // 1文字削除
+        input.value = input.value.slice(0, start - 1) + input.value.slice(end);
+        start--;
+    } else if (start !== end) {
+        // 選択範囲削除
+        input.value = input.value.slice(0, start) + input.value.slice(end);
+    }
+
+    input.selectionStart = start;
+    input.selectionEnd = start;
+    input.focus();
+
+    lastCaret.start = start;
+    lastCaret.end = start;
+
+    setTimeout(generateCommutator, 0);
+}
+
 
         // ==== Commutator ops ====
         function generateCommutator() {
@@ -506,6 +545,9 @@
                 b.addEventListener('click', () => addToCurrentInput(b.textContent.trim()));
             });
             document.getElementById('clearCurrent').addEventListener('click', clearCurrentInput);
+            // DOMContentLoaded 内で登録
+            document.getElementById('backspaceBtn').addEventListener('click', backspaceCurrentInput);
+
 
             // Preset 読み込み
             document.querySelectorAll('.preset').forEach(b => {
