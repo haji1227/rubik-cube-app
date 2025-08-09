@@ -367,11 +367,11 @@ document.getElementById('clearCurrent').addEventListener('click', () => {
   lastCaret.start = 0;
   lastCaret.end = 0;
   if (target.id === 'commutatorResult') {
-    currentAlgorithm = '';
-    updateAlgorithmDisplay();
-    updateCube();
+   // currentAlgorithm = '';
+   // updateAlgorithmDisplay();
+   // updateCube();
   } else {
-    generateCommutator();
+    //generateCommutator();
   }
 }
 
@@ -407,11 +407,11 @@ document.getElementById('clearCurrent').addEventListener('click', () => {
   lastCaret.end   = start;
 
   if (input.id === 'commutatorResult') {
-    currentAlgorithm = input.value || '';
-    updateAlgorithmDisplay();
-    updateCube();
+   // currentAlgorithm = input.value || '';
+   // updateAlgorithmDisplay();
+    //updateCube();
   } else {
-    setTimeout(generateCommutator, 0);
+    //setTimeout(generateCommutator, 0);
   }
 }
 
