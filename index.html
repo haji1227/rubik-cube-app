@@ -154,6 +154,7 @@
 
                 <!-- Preset Commutators（ラベル削除済み） -->
                 <div class="preset-commutators" style="margin-bottom: 12px;">
+                    <button class="preset-btn preset" data-a="R" data-b="U">sexy</button>
                     <button class="preset-btn preset" data-a="R U R'" data-b="D R' D'">RUD Basic</button>
                     <button class="preset-btn preset" data-a="R" data-b="U R U'">Corner 3-cycle</button>
                     <button class="preset-btn preset" data-a="R U' R'" data-b="F R F'">T-Perm Setup</button>
@@ -173,13 +174,12 @@
             <div class="cube-section">
                 <h3>Main Cube - Real-time Tracking</h3>
                 <div class="cube-container">
+                <div class="algorithm-display" id="algorithmDisplay">R U R' D R' D' R U' R' D R D'</div>
                     <div class="cube" style="width:350px; height:369px" id="mainCube">
                         <script>AnimCube3("move=R U R' D R' D' R U' R' D R D'&buttonbar=1&movetext=1&hint=6&scale=1&speed=12")</script>
                     </div>
                     
                     <div class="controls-section">
-                        <div class="algorithm-display" id="algorithmDisplay">R U R' D R' D' R U' R' D R D'</div>
-
                         
 
                         <div class="settings-grid" style="grid-template-columns: repeat(2, 1fr);">
@@ -256,71 +256,71 @@
             return inverted.join(' ');
         }
 
-        // ==== Caret memory wiring ====
         function wireCaretMemory() {
-            ['sequenceA','sequenceB'].forEach(id => {
-                const el = document.getElementById(id);
-                ['focus','click','keyup','select','input','mouseup'].forEach(ev => {
-                    el.addEventListener(ev, () => {
-                        lastFocusedInput = el;
-                        lastCaret.start = el.selectionStart;
-                        lastCaret.end   = el.selectionEnd;
-                    });
-                });
-            });
-        }
+  ['sequenceA','sequenceB','commutatorResult'].forEach(id => {
+    const el = document.getElementById(id);
+    ['focus','click','keyup','select','input','mouseup'].forEach(ev => {
+      el.addEventListener(ev, () => {
+        lastFocusedInput = el;
+        lastCaret.start = el.selectionStart;
+        lastCaret.end = el.selectionEnd;
+      });
+    });
+  });
+}
+
+// キューブ更新
+function updateAllCubes(alg) {
+  currentAlgorithm = alg;
+  document.getElementById('algorithmDisplay').textContent = alg;
+  document.getElementById('mainCube').innerHTML =
+    `<script>AnimCube3("move=${alg}&buttonbar=1&movetext=1&hint=${document.getElementById('hintLevel').value}&scale=1&speed=${document.getElementById('speed').value}")<\/script>`;
+}
+
+// 「Set」ボタンで結果欄を反映
+document.getElementById('setResult').addEventListener('click', () => {
+  const alg = document.getElementById('commutatorResult').value;
+  updateAllCubes(alg);
+});
+
+// Quick Input Buttons
+function insertAtCaret(text) {
+  if (!lastFocusedInput) return;
+  const el = lastFocusedInput;
+  const start = el.selectionStart;
+  const end = el.selectionEnd;
+  const value = el.value;
+  el.value = value.substring(0, start) + text + value.substring(end);
+  el.selectionStart = el.selectionEnd = start + text.length;
+  el.focus();
+}
+document.getElementById('backspaceBtn').addEventListener('click', () => {
+  if (!lastFocusedInput) return;
+  const el = lastFocusedInput;
+  const start = el.selectionStart;
+  const end = el.selectionEnd;
+  if (start === end && start > 0) {
+    el.value = el.value.substring(0, start - 1) + el.value.substring(end);
+    el.selectionStart = el.selectionEnd = start - 1;
+  } else {
+    el.value = el.value.substring(0, start) + el.value.substring(end);
+    el.selectionStart = el.selectionEnd = start;
+  }
+});
+document.getElementById('clearCurrent').addEventListener('click', () => {
+  if (!lastFocusedInput) return;
+  lastFocusedInput.value = '';
+});
+
+
+
 
         // ==== Quick Input insertion (カーソル位置維持) ====
         function addToCurrentInput(move) {
-            let input = null;
-            if (lastFocusedInput && (lastFocusedInput.id === 'sequenceA' || lastFocusedInput.id === 'sequenceB')) {
-                input = lastFocusedInput;
-            } else if (document.activeElement && (document.activeElement.id === 'sequenceA' || document.activeElement.id === 'sequenceB')) {
-                input = document.activeElement;
-            } else {
-                input = document.getElementById('sequenceA');
-                input.focus();
-                lastCaret.start = input.value.length;
-                lastCaret.end   = input.value.length;
-            }
-
-            // Space ボタンは半角空白に変換
-            const token = (move === 'Space') ? ' ' : move;
-
-            const start = (lastCaret.start != null) ? lastCaret.start : input.selectionStart;
-            const end   = (lastCaret.end   != null) ? lastCaret.end   : input.selectionEnd;
-
-            const text = input.value;
-            input.value = text.slice(0, start) + token + text.slice(end);
-
-            const newPos = start + token.length;
-            input.selectionStart = newPos;
-            input.selectionEnd   = newPos;
-            input.focus();
-
-            lastFocusedInput = input;
-            lastCaret.start = newPos;
-            lastCaret.end   = newPos;
-
-            setTimeout(generateCommutator, 0);
-        }
-
-        function clearCurrentInput() {
-            const target = (lastFocusedInput && (lastFocusedInput.id === 'sequenceA' || lastFocusedInput.id === 'sequenceB'))
-                ? lastFocusedInput : document.getElementById('sequenceA');
-            target.value = '';
-            target.focus();
-            lastCaret.start = 0;
-            lastCaret.end = 0;
-            generateCommutator();
-        }
-
-        function backspaceCurrentInput() {
     let input = null;
-
-    if (lastFocusedInput && (lastFocusedInput.id === 'sequenceA' || lastFocusedInput.id === 'sequenceB')) {
+    if (lastFocusedInput && (lastFocusedInput.id === 'sequenceA' || lastFocusedInput.id === 'sequenceB' || lastFocusedInput.id === 'commutatorResult')) {
         input = lastFocusedInput;
-    } else if (document.activeElement && (document.activeElement.id === 'sequenceA' || document.activeElement.id === 'sequenceB')) {
+    } else if (document.activeElement && (document.activeElement.id === 'sequenceA' || document.activeElement.id === 'sequenceB' || document.activeElement.id === 'commutatorResult')) {
         input = document.activeElement;
     } else {
         input = document.getElementById('sequenceA');
@@ -329,26 +329,86 @@
         lastCaret.end = input.value.length;
     }
 
-    let start = (lastCaret.start != null) ? lastCaret.start : input.selectionStart;
-    let end = (lastCaret.end != null) ? lastCaret.end : input.selectionEnd;
+    const token = (move === 'Space') ? ' ' : move;
 
-    if (start === end && start > 0) {
-        // 1文字削除
-        input.value = input.value.slice(0, start - 1) + input.value.slice(end);
-        start--;
-    } else if (start !== end) {
-        // 選択範囲削除
-        input.value = input.value.slice(0, start) + input.value.slice(end);
-    }
+    const start = (lastCaret.start != null) ? lastCaret.start : input.selectionStart;
+    const end = (lastCaret.end != null) ? lastCaret.end : input.selectionEnd;
 
-    input.selectionStart = start;
-    input.selectionEnd = start;
+    const text = input.value;
+    input.value = text.slice(0, start) + token + text.slice(end);
+
+    const newPos = start + token.length;
+    input.selectionStart = newPos;
+    input.selectionEnd = newPos;
     input.focus();
 
-    lastCaret.start = start;
-    lastCaret.end = start;
+    lastFocusedInput = input;
+    lastCaret.start = newPos;
+    lastCaret.end = newPos;
 
+    if (input.id === 'sequenceA' || input.id === 'sequenceB') {
+       // generateCommutator();  // A/Bなら自動生成更新
+    } else if (input.id === 'commutatorResult') {
+       // currentAlgorithm = input.value;  // 結果欄は currentAlgorithm も更新
+      //  updateAlgorithmDisplay();
+       // updateCube();
+    }
+}
+
+        function clearCurrentInput() {
+  const target = (lastFocusedInput && (['sequenceA','sequenceB','commutatorResult'].includes(lastFocusedInput.id)))
+    ? lastFocusedInput : document.getElementById('sequenceA');
+  target.value = '';
+  target.focus();
+  lastCaret.start = 0;
+  lastCaret.end = 0;
+  if (target.id === 'commutatorResult') {
+    currentAlgorithm = '';
+    updateAlgorithmDisplay();
+    updateCube();
+  } else {
+    generateCommutator();
+  }
+}
+
+
+        function backspaceCurrentInput() {
+  let input = null;
+  if (lastFocusedInput && (['sequenceA','sequenceB','commutatorResult'].includes(lastFocusedInput.id))) {
+    input = lastFocusedInput;
+  } else if (document.activeElement && (['sequenceA','sequenceB','commutatorResult'].includes(document.activeElement.id))) {
+    input = document.activeElement;
+  } else {
+    input = document.getElementById('sequenceA');
+    input.focus();
+    lastCaret.start = input.value.length;
+    lastCaret.end = input.value.length;
+  }
+
+  let start = (lastCaret.start != null) ? lastCaret.start : input.selectionStart;
+  let end   = (lastCaret.end   != null) ? lastCaret.end   : input.selectionEnd;
+
+  if (start === end && start > 0) {
+    input.value = input.value.slice(0, start - 1) + input.value.slice(end);
+    start--;
+  } else if (start !== end) {
+    input.value = input.value.slice(0, start) + input.value.slice(end);
+  }
+
+  input.selectionStart = start;
+  input.selectionEnd   = start;
+  input.focus();
+
+  lastCaret.start = start;
+  lastCaret.end   = start;
+
+  if (input.id === 'commutatorResult') {
+    currentAlgorithm = input.value || '';
+    updateAlgorithmDisplay();
+    updateCube();
+  } else {
     setTimeout(generateCommutator, 0);
+  }
 }
 
 
@@ -508,91 +568,88 @@
 
         // ==== DOM Ready ====
         document.addEventListener('DOMContentLoaded', function() {
-            // 初期表示
-            updateAlgorithmDisplay();
+    // 初期表示
+    updateAlgorithmDisplay();
 
-            // Aにフォーカス
-            const a = document.getElementById('sequenceA');
-            a.focus();
-            a.selectionStart = a.selectionEnd = a.value.length;
-            lastFocusedInput = a;
-            lastCaret.start = lastCaret.end = a.value.length;
+    // Aにフォーカス
+    const a = document.getElementById('sequenceA');
+    a.focus();
+    a.selectionStart = a.selectionEnd = a.value.length;
+    lastFocusedInput = a;
+    lastCaret.start = lastCaret.end = a.value.length;
 
-            wireCaretMemory();
+    wireCaretMemory();
 
-            // --- ボタンのフォーカス奪取を広範囲で阻止 ---
-            // Quick Input / Modifier / Preset / Commutator / Main move などすべて対象
-            const selector = [
-                '.face-buttons button',
-                '.modifier-buttons button',
-                '.preset-commutators .preset-btn',
-                '.commutator-section .op',
-                '.commutator-section #clearCurrent',
-                '.commutator-section #setResult',
-                '.commutator-section #clearResult',
-                '.controls-section .add',
-                '.controls-section #toggleNotation'
-            ].join(',');
+    // --- ボタンのフォーカス奪取を広範囲で阻止 ---
+    const selector = [
+        '.face-buttons button',
+        '.modifier-buttons button',
+        '.preset-commutators .preset-btn',
+        '.commutator-section .op',
+        '.commutator-section #clearCurrent',
+        '.commutator-section #setResult',
+        '.commutator-section #clearResult',
+        '.controls-section .add',
+        '.controls-section #toggleNotation'
+    ].join(',');
 
-            document.querySelectorAll(selector).forEach(btn => {
-                // マウスダウンでフォーカス遷移を阻止（Mac Safari/Chrome対策）
-                btn.addEventListener('mousedown', (e) => e.preventDefault());
-                btn.setAttribute('tabindex', '-1');
-            });
+    document.querySelectorAll(selector).forEach(btn => {
+        btn.addEventListener('mousedown', (e) => e.preventDefault());
+        btn.setAttribute('tabindex', '-1');
+    });
 
-            // Quick Input ボタンに動作付与
-            document.querySelectorAll('.qi').forEach(b => {
-                b.addEventListener('click', () => addToCurrentInput(b.textContent.trim()));
-            });
-            document.getElementById('clearCurrent').addEventListener('click', clearCurrentInput);
-            // DOMContentLoaded 内で登録
-            document.getElementById('backspaceBtn').addEventListener('click', backspaceCurrentInput);
+    // Quick Input ボタンに動作付与
+    document.querySelectorAll('.qi').forEach(b => {
+        b.addEventListener('click', () => addToCurrentInput(b.textContent.trim()));
+    });
+    document.getElementById('clearCurrent').addEventListener('click', clearCurrentInput);
+    document.getElementById('backspaceBtn').addEventListener('click', backspaceCurrentInput);
 
-
-            // Preset 読み込み
-            document.querySelectorAll('.preset').forEach(b => {
-                b.addEventListener('click', () => {
-                    loadPresetCommutator(b.dataset.a || '', b.dataset.b || '');
-                });
-            });
-
-            // Commutator 操作
-            document.querySelectorAll('.op').forEach(b => {
-                b.addEventListener('click', () => {
-                    const op = b.dataset.op;
-                    if (op === 'comm') generateCommutator();
-                    if (op === 'conj') generateConjugate();
-                    if (op === 'ab') generateAB();
-                });
-            });
-            document.getElementById('setResult').addEventListener('click', setResult);
-            document.getElementById('clearResult').addEventListener('click', clearResult);
-
-            // Main controls
-            document.querySelectorAll('.add').forEach(b => {
-                b.addEventListener('click', () => addMove(b.textContent.trim()));
-            });
-            document.getElementById('toggleNotation').addEventListener('click', toggleMoveText);
-
-            // スライダー連動
-            document.getElementById('speed').addEventListener('input', function() {
-                document.getElementById('speedValue').textContent = this.value;
-                updateCube();
-            });
-            document.getElementById('hintLevel').addEventListener('input', function() {
-                document.getElementById('hintValue').textContent = this.value;
-                updateCube();
-            });
-
-            // 入力変更をリアルタイム反映
-            document.getElementById('sequenceA').addEventListener('input', generateCommutator);
-            document.getElementById('sequenceB').addEventListener('input', generateCommutator);
-
-            // Enter で Set
-            document.getElementById('commutatorResult').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') setResult();
-            });
+    // Preset 読み込み
+    document.querySelectorAll('.preset').forEach(b => {
+        b.addEventListener('click', () => {
+            loadPresetCommutator(b.dataset.a || '', b.dataset.b || '');
         });
+    });
+
+    // コミュテータ操作（ボタン押したときだけ結果欄更新）
+    document.querySelectorAll('.op').forEach(b => {
+        b.addEventListener('click', () => {
+            const op = b.dataset.op;
+            if (op === 'comm') generateCommutator();
+            if (op === 'conj') generateConjugate();
+            if (op === 'ab') generateAB();
+        });
+    });
+
+    document.getElementById('setResult').addEventListener('click', setResult);
+    document.getElementById('clearResult').addEventListener('click', clearResult);
+
+    // Main controls
+    document.querySelectorAll('.add').forEach(b => {
+        b.addEventListener('click', () => addMove(b.textContent.trim()));
+    });
+    document.getElementById('toggleNotation').addEventListener('click', toggleMoveText);
+
+    // スライダー連動
+    document.getElementById('speed').addEventListener('input', function() {
+        document.getElementById('speedValue').textContent = this.value;
+        updateCube();
+    });
+    document.getElementById('hintLevel').addEventListener('input', function() {
+        document.getElementById('hintValue').textContent = this.value;
+        updateCube();
+    });
+
+    // ここは削除（A/B変更で自動生成しない）
+    // document.getElementById('sequenceA').addEventListener('input', generateCommutator);
+    // document.getElementById('sequenceB').addEventListener('input', generateCommutator);
+
+    // Enter で Set
+    document.getElementById('commutatorResult').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') setResult();
+    });
+});
 
         // 触覚最適化
         if ('ontouchstart' in window) { document.body.style.touchAction = 'manipulation'; }
