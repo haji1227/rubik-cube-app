@@ -139,14 +139,18 @@
                 <!-- Quick Input Buttons (ラベル削除済み) -->
                 <div class="button-grid face-buttons" style="margin-bottom: 8px;">
                     <button class="move-btn qi">R</button>
+                    <button class="move-btn qi">L</button>
                     <button class="move-btn qi">U</button>
                     <button class="move-btn qi">D</button>
-                    <button class="move-btn qi">L</button>
                     <button class="move-btn qi">F</button>
                     <button class="move-btn qi">B</button>
-                                       
-<button class="move-btn qi">w</button>  <!-- wide modifier -->
-<button class="move-btn qi">M</button>  <!-- middle slice -->
+                    <button class="move-btn qi">r</button>
+                    <button class="move-btn qi">l</button>
+                    <button class="move-btn qi">u</button>
+                    <button class="move-btn qi">d</button>
+                    <button class="move-btn qi">f</button>
+                    <button class="move-btn qi">b</button>
+                    <button class="move-btn qi">M</button>  <!-- middle slice -->
 <button class="move-btn qi">E</button>  <!-- equatorial -->
 <button class="move-btn qi">S</button>  <!-- standing -->
 <button class="move-btn qi">x</button>
@@ -285,10 +289,20 @@
 
 // キューブ更新
 function updateAllCubes(alg) {
-  currentAlgorithm = alg;
-  document.getElementById('algorithmDisplay').textContent = alg;
-  document.getElementById('mainCube').innerHTML =
-    `<script>AnimCube3("move=${alg}&buttonbar=1&movetext=1&hint=${document.getElementById('hintLevel').value}&scale=1&speed=${document.getElementById('speed').value}")<\/script>`;
+    currentAlgorithm = alg;
+    document.getElementById('algorithmDisplay').textContent = alg;
+    
+    // 修正：同様の処理に統一
+    const cubeDiv = document.getElementById('mainCube');
+    cubeDiv.innerHTML = '';
+    setTimeout(() => {
+        const script = document.createElement('script');
+        const encodedAlg = alg.trim() ? encodeURIComponent(alg.trim()) : '';
+        const speed = document.getElementById('speed').value;
+        const hint = document.getElementById('hintLevel').value;
+        script.textContent = `AnimCube3("move=${encodedAlg}&buttonbar=1&movetext=1&hint=${hint}&scale=1&speed=${speed}");`;
+        cubeDiv.appendChild(script);
+    }, 50);
 }
 
 // 「Set」ボタンで結果欄を反映
@@ -568,17 +582,22 @@ document.getElementById('clearCurrent').addEventListener('click', () => {
         function toggleMoveText() { showingMoveText = !showingMoveText; updateCube(); }
 
         function updateCube() {
-            const speed = document.getElementById('speed').value;
-            const hint = document.getElementById('hintLevel').value;
-            const algorithm = currentAlgorithm || '';
-            const cubeDiv = document.getElementById('mainCube');
-            cubeDiv.innerHTML = '';
-            const moveTextParam = showingMoveText ? '&movetext=1' : '&movetext=0';
-            const params = `move=${encodeURIComponent(algorithm)}&buttonbar=1&speed=${speed}&hint=${hint}&scale=0&buttonheight=25${moveTextParam}`;
-            const script = document.createElement('script');
-            script.textContent = `AnimCube3("${params}")`;
-            cubeDiv.appendChild(script);
-        }
+    const speed = document.getElementById('speed').value;
+    const hint = document.getElementById('hintLevel').value;
+    const algorithm = currentAlgorithm || '';
+    const cubeDiv = document.getElementById('mainCube');
+    cubeDiv.innerHTML = '';
+    
+    // 修正：エンコーディングとパラメータの調整
+    setTimeout(() => {
+        const script = document.createElement('script');
+        const encodedAlg = algorithm.trim() ? encodeURIComponent(algorithm.trim()) : '';
+        const moveTextParam = showingMoveText ? '&movetext=1' : '&movetext=0';
+        const params = `move=${encodedAlg}&buttonbar=1&speed=${speed}&hint=${hint}&scale=1${moveTextParam}`;
+        script.textContent = `AnimCube3("${params}");`;
+        cubeDiv.appendChild(script);
+    }, 50);
+}
 
         // ==== DOM Ready ====
         document.addEventListener('DOMContentLoaded', function() {
