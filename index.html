@@ -49,7 +49,7 @@
             font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 8px; text-align: center;
         }
         .button-grid { display: grid; gap: 4px; margin-bottom: 8px; }
-        .face-buttons { grid-template-columns: repeat(6, 1fr); }
+        .face-buttons { grid-template-columns: repeat(4, 1fr); }
         .modifier-buttons { grid-template-columns: repeat(4, 1fr); }
         .rotation-buttons { grid-template-columns: repeat(3, 1fr); }
         .middle-buttons { grid-template-columns: repeat(3, 1fr); }
@@ -155,18 +155,17 @@
 <button class="move-btn qi">S</button>  <!-- standing -->
 <button class="move-btn qi">x</button>
                     <button class="move-btn qi">y</button><button class="move-btn qi">z</button>  <!-- z rotation -->
-                <button class="move-btn qi">2</button>
-                    <button class="move-btn qi">3</button>
-                    <button class="move-btn qi">4</button>
-                    <button class="move-btn qi">5</button>
-                    <button class="move-btn qi">6</button>
                 </div>
                 <div class="button-grid modifier-buttons" style="margin-bottom: 12px; grid-template-columns: repeat(5, 1fr);">
-  <button class="modifier-btn qi">'</button>
-<!--  <button class="modifier-btn qi">2</button> -->
+  <button class="modifier-btn qi">2</button>
   <button class="modifier-btn qi">Space</button>
-  <button class="modifier-btn" id="backspaceBtn">BS</button>
+  <button class="modifier-btn qi">'</button>
+  <button class="action-btn" id="backspaceBtn">BS</button>
   <button class="action-btn" id="clearCurrent">Clear</button>
+  <button class="modifier-btn qi">3</button>
+  <button class="modifier-btn qi">4</button>
+  <button class="modifier-btn qi">5</button>
+  <button class="modifier-btn qi">6</button>
 </div>
 
 
