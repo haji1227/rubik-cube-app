@@ -94,7 +94,7 @@
         .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #4CAF50; cursor: pointer; }
         .value-display { background: #4CAF50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; min-width: 32px; text-align: center; }
         .preset-commutators {
-            display: grid; grid-template-columns: repeat(4, 1fr);
+            display: grid; grid-template-columns: repeat(3, 1fr);
             gap: 4px; margin-top: 0;
         }
         .preset-btn { background: linear-gradient(45deg, #673AB7, #5E35B1); color: white; padding: 6px 8px; font-size: 10px; text-align: left; }
@@ -177,6 +177,13 @@
                     <button class="preset-btn preset" data-a="R U' R'" data-b="F R F'">T-Perm Setup</button>
                     <button class="preset-btn preset" data-a="M'" data-b="U2 M U2">M-slice</button>
                 </div>
+                <div class="preset-commutators" style="margin-bottom: 8px;">
+    <button class="preset-btn result-preset" data-result="R U R' U'">Sexy Move</button>
+    <button class="preset-btn result-preset" data-result="R U R' F' R U R' U' R' F R2 U' R'">T-Perm</button>
+    <button class="preset-btn result-preset" data-result="M2 U M2 U2 M2 U M2">H-Perm</button>
+    <button class="preset-btn result-preset" data-result="R U R' U R U2' R'">Sune(Rt)</button>
+    <button class="preset-btn result-preset" data-result="L' U' L U' L' U2 L">AntiSune(Lt)</button>
+</div>
 
                 <div class="button-grid" style="grid-template-columns: repeat(5, 1fr);">
                     <button class="commutator-btn op" data-op="ab">Gen A B</button>
@@ -517,6 +524,16 @@ document.getElementById('clearCurrent').addEventListener('click', () => {
             generateCommutator();
         }
 
+        // 結果欄にだけ書き込む関数を追加
+function loadResultPreset(algorithm) {
+    document.getElementById('commutatorResult').value = algorithm;
+    // 結果欄にフォーカスを当てる
+    const result = document.getElementById('commutatorResult');
+    result.focus();
+    result.selectionStart = result.selectionEnd = result.value.length;
+    lastFocusedInput = result;
+    lastCaret.start = lastCaret.end = result.value.length;
+}
         // ==== Analysis cubes ====
         function updateAnalysisCube(cubeId, algorithm) {
             const cubeDiv = document.getElementById(cubeId);
@@ -617,6 +634,7 @@ document.getElementById('clearCurrent').addEventListener('click', () => {
         '.face-buttons button',
         '.modifier-buttons button',
         '.preset-commutators .preset-btn',
+        '.preset-commutators .result-preset',  
         '.commutator-section .op',
         '.commutator-section #clearCurrent',
         '.commutator-section #setResult',
@@ -643,6 +661,13 @@ document.getElementById('clearCurrent').addEventListener('click', () => {
             loadPresetCommutator(b.dataset.a || '', b.dataset.b || '');
         });
     });
+
+    // 結果欄専用プリセット
+document.querySelectorAll('.result-preset').forEach(b => {
+    b.addEventListener('click', () => {
+        loadResultPreset(b.dataset.result || '');
+    });
+});
 
     // コミュテータ操作（ボタン押したときだけ結果欄更新）
     document.querySelectorAll('.op').forEach(b => {
